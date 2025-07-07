@@ -389,85 +389,64 @@
             
             // Form submission
             document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const submitBtn = document.getElementById('submitBtn');
-                const statusMessage = document.getElementById('statusMessage');
-                
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
-                statusMessage.classList.add('hidden');
+  e.preventDefault();
+  
+  const submitBtn = document.getElementById('submitBtn');
+  const statusMessage = document.getElementById('statusMessage');
+  
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+  statusMessage.classList.add('hidden');
 
-                try {
-                    // Collect all form data
-                    const formData = {
-                        title: document.getElementById('title').value,
-                        body: `**Type:** ${document.getElementById('feedbackType').value}\n\n` +
-                              `**Priority:** ${document.getElementById('priority').value}\n\n` +
-                              (document.getElementById('environment').value ? `**Environment:** ${document.getElementById('environment').value}\n\n` : '') +
-                              `**Details:**\n${document.getElementById('details').value}\n\n` +
-                              (document.getElementById('contactName').value || document.getElementById('contactInfo').value ? 
-                               `**Contact Information:**\n` +
-                               (document.getElementById('contactName').value ? `- Name: ${document.getElementById('contactName').value}\n` : '') +
-                               (document.getElementById('contactInfo').value ? `- Contact: ${document.getElementById('contactInfo').value}\n` : '') : ''),
-                        labels: [
-                            document.getElementById('feedbackType').value,
-                            document.getElementById('priority').value
-                        ]
-                    };
+  try {
+    const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/dispatches`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify({
+        event_type: 'submit_feedback',
+        client_payload: {
+          title: document.getElementById('title').value,
+          type: document.getElementById('feedbackType').value,
+          priority: document.getElementById('priority').value,
+          environment: document.getElementById('environment').value,
+          details: document.getElementById('details').value,
+          contact: document.getElementById('contactName').value + 
+                  (document.getElementById('contactInfo').value ? ` (${document.getElementById('contactInfo').value})` : '')
+        }
+      })
+    });
 
-                    const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `token ${GITHUB_TOKEN}`,
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/vnd.github.v3+json'
-                        },
-                        body: JSON.stringify(formData)
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        statusMessage.innerHTML = `
-                            <div class="p-4 bg-green-50 text-green-700 rounded-lg">
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle mr-2 text-xl"></i>
-                                    <div>
-                                        <p class="font-medium">Thank you for your feedback!</p>
-                                        <p class="text-sm">Your submission has been recorded as issue #${data.number}.</p>
-                                    </div>
-                                </div>
-                                <div class="mt-3 text-center">
-                                    <a href="${data.html_url}" target="_blank" class="inline-flex items-center px-3 py-1 border border-green-300 text-sm font-medium rounded-md text-green-700 bg-white hover:bg-green-50">
-                                        View on GitHub <i class="fas fa-external-link-alt ml-1 text-xs"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                        document.getElementById('feedbackForm').reset();
-                        filePreview.innerHTML = '';
-                    } else {
-                        throw new Error('Failed to submit feedback');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    statusMessage.innerHTML = `
-                        <div class="p-4 bg-red-50 text-red-700 rounded-lg">
-                            <div class="flex items-center">
-                                <i class="fas fa-exclamation-circle mr-2 text-xl"></i>
-                                <div>
-                                    <p class="font-medium">Error submitting feedback</p>
-                                    <p class="text-sm">Please try again later or contact support.</p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                } finally {
-                    statusMessage.classList.remove('hidden');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Submit Feedback';
-                }
-            });
+    if (response.ok) {
+      // Success message
+      statusMessage.innerHTML = `
+        <div class="p-4 bg-green-50 text-green-700 rounded-lg">
+          <i class="fas fa-check-circle mr-2"></i>
+          Thank you! Your feedback has been submitted and will be processed shortly.
+        </div>
+      `;
+      document.getElementById('feedbackForm').reset();
+      filePreview.innerHTML = '';
+    } else {
+      throw new Error('Failed to submit feedback');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    statusMessage.innerHTML = `
+      <div class="p-4 bg-red-50 text-red-700 rounded-lg">
+        <i class="fas fa-exclamation-circle mr-2"></i>
+        There was an error submitting your feedback. Please try again later.
+      </div>
+    `;
+  } finally {
+    statusMessage.classList.remove('hidden');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Feedback';
+  }
+});
         });
     </script>
 </body>
