@@ -1,0 +1,19 @@
+name: Process Feedback
+on:
+  repository_dispatch:
+    types: [submit_feedback]
+
+jobs:
+  process-feedback:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `${{ github.event.client_payload.title }}`,
+              body: `**Type:** ${{ github.event.client_payload.type }}\n\n${{ github.event.client_payload.body }}`,
+              labels: [${{ github.event.client_payload.type }}]
+            })
