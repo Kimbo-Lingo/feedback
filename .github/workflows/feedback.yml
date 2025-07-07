@@ -14,6 +14,13 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `${{ github.event.client_payload.title }}`,
-              body: `**Type:** ${{ github.event.client_payload.type }}\n\n${{ github.event.client_payload.body }}`,
-              labels: [${{ github.event.client_payload.type }}]
+              body: `**Type:** ${{ github.event.client_payload.type }}\n\n` +
+                    `**Priority:** ${{ github.event.client_payload.priority }}\n\n` +
+                    `**Environment:** ${{ github.event.client_payload.environment || 'Not specified' }}\n\n` +
+                    `**Details:**\n${{ github.event.client_payload.details }}\n\n` +
+                    `**Contact:** ${{ github.event.client_payload.contact || 'Not provided' }}`,
+              labels: [
+                ${{ github.event.client_payload.type }},
+                ${{ github.event.client_payload.priority }}
+              ]
             })
