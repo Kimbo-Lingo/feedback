@@ -1,0 +1,15 @@
+blank_issues_enabled: false
+contact_links: []
+issue_templates:
+  - name: 🐞 Bug Report
+    description: Report a technical or functional issue in the app
+    file: bug_report.yml
+  - name: ✨ Feature Request
+    description: Propose a new feature or functionality
+    file: feature_request.yml
+  - name: 🔧 Enhancement Suggestion
+    description: Recommend an improvement to something that already exists
+    file: enhancement.yml
+  - name: 💬 General Feedback
+    description: Share your thoughts, appreciation, or general feedback
+    file: general_feedback.yml
