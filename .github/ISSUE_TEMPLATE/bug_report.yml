@@ -1,0 +1,89 @@
+name: 🐞 Bug Report
+description: Report a technical issue or unexpected behavior in the app
+title: "[BUG] - "
+labels: ["bug"]
+assignees: []
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Issue Title
+      placeholder: "e.g., App crashes when logging in"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What happened? What did you expect instead?
+      placeholder: "Describe what you were doing and what failed..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide steps we can follow to reproduce the issue.
+      placeholder: |
+        1. Open the app
+        2. Tap on "Settings"
+        3. App crashes
+    validations:
+      required: true
+
+  - type: input
+    id: device_info
+    attributes:
+      label: Device / System Info
+      placeholder: "e.g., iPhone 13 / iOS 17 / App v1.4.0 / Chrome 126"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform or Store
+      options:
+        - Google Play Store
+        - Apple App Store
+        - Web App (Browser)
+        - Test Build / APK
+      validations:
+        required: false
+
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Screenshots or Video
+      description: Attach relevant visuals (optional)
+      placeholder: "Drag and drop files or paste links here"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency Level
+      options:
+        - Low – Minor issue
+        - Medium – Affects usability
+        - High – Blocks major functionality
+    validations:
+      required: false
+
+  - type: input
+    id: email
+    attributes:
+      label: Contact Email (optional)
+      placeholder: "e.g., user@example.com"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Contact Consent
+      options:
+        - label: I consent to being contacted about this bug report.
