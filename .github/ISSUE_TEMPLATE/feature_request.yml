@@ -1,0 +1,65 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+title: "[FEATURE] - "
+labels: ["enhancement", "feature"]
+assignees: []
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Feature Title
+      placeholder: "e.g., Add dark mode"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: What should be added or changed?
+      placeholder: "Describe the new functionality you'd like to see..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: value
+    attributes:
+      label: Value or Benefit
+      description: Why is this feature useful? Who benefits?
+      placeholder: "Explain the impact on users, workflows, or business..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Visuals / Mockups / Screenshots (optional)
+      placeholder: "Attach images or diagrams if available..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency Level
+      options:
+        - Low – Nice to have
+        - Medium – Important
+        - High – Urgently needed
+    validations:
+      required: false
+
+  - type: input
+    id: email
+    attributes:
+      label: Contact Email (optional)
+      placeholder: "e.g., user@example.com"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Contact Consent
+      options:
+        - label: I consent to being contacted about this feature request.
