@@ -1,0 +1,45 @@
+name: 💬 General Feedback
+description: Share ideas, observations, or anything else
+title: "[FEEDBACK] - "
+labels: ["feedback"]
+assignees: []
+body:
+  - type: textarea
+    id: message
+    attributes:
+      label: Your Message
+      description: Share your experience, comments, or general feedback.
+      placeholder: "Tell us what you think..."
+    validations:
+      required: true
+
+  - type: input
+    id: context
+    attributes:
+      label: (Optional) Device / Platform Info
+      placeholder: "e.g., iPhone 12 / App v1.3 / Chrome"
+    validations:
+      required: false
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Visuals or Links (optional)
+      placeholder: "Paste image or video URLs, or attach files..."
+    validations:
+      required: false
+
+  - type: input
+    id: email
+    attributes:
+      label: Contact Email (optional)
+      placeholder: "e.g., feedback@domain.com"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Contact Consent
+      options:
+        - label: I consent to being contacted about my feedback.
