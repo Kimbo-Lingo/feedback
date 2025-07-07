@@ -18,8 +18,7 @@ body:
       label: Bug Description
       description: What happened? What did you expect instead?
       placeholder: "Describe what you were doing and what failed..."
-    validations:
-      required: true
+    # removed validations here, not supported on textarea
 
   - type: textarea
     id: steps
@@ -30,8 +29,7 @@ body:
         1. Open the app
         2. Tap on "Settings"
         3. App crashes
-    validations:
-      required: true
+    # removed validations here, not supported on textarea
 
   - type: input
     id: device_info
@@ -50,8 +48,8 @@ body:
         - Apple App Store
         - Web App (Browser)
         - Test Build / APK
-      validations:
-        required: false
+    validations:
+      required: false
 
   - type: textarea
     id: attachments
@@ -59,8 +57,7 @@ body:
       label: Screenshots or Video
       description: Attach relevant visuals (optional)
       placeholder: "Drag and drop files or paste links here"
-    validations:
-      required: false
+    # removed validations here
 
   - type: dropdown
     id: urgency
